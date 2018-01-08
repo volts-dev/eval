@@ -154,6 +154,15 @@ func isTypeName(x ast.Expr) bool {
 	return true
 }
 
+func isKeyword(key string) bool {
+	for _, k := range ast.Keywords {
+		if k == key {
+			return true
+		}
+	}
+	return false
+}
+
 // isLiteralType reports whether x is a legal composite literal type.
 func isLiteralType(x ast.Expr) bool {
 	switch t := x.(type) {
@@ -748,6 +757,7 @@ func (self *TParser) parse_unary_expr(lhs bool) ast.Expr {
 		fmt.Println("parse_unary_expr OPERATOR", t)
 		//case lexer.ADD, lexer.SUB, lexer.NOT, lexer.XOR, lexer.AND:
 		self.next()
+		self.skipWhitespace()
 		a := self.parse_unary_expr(false)
 		return &ast.TUnaryExpr{
 			NegativeSign: negativeSign,
@@ -819,11 +829,12 @@ func (self *TParser) parse_unary_expr(lhs bool) ast.Expr {
 // 获得TOKEN 的优先顺序
 func (p *TParser) token_prec() (*lexer.TToken, int) {
 	tok := p.Current()
-	t := tok.Type
+	//t := tok.Type
 	if p.inRhs && tok.Type == lexer.ASSIGN {
-		t = lexer.EQL
+		//t = lexer.EQL
+		tok.Type = lexer.EQL
 	}
-	fmt.Println("token_prec", lexer.TokenNames[tok.Type], tok, t, lexer.Precedence(tok))
+	//fmt.Println("token_prec", lexer.TokenNames[tok.Type], tok, t, lexer.Precedence(tok))
 	return tok, lexer.Precedence(tok)
 }
 
@@ -834,10 +845,12 @@ func (self *TParser) parse_binary_expr(lhs bool, prec1 int) ast.Expr {
 	self.skipWhitespace()
 	for {
 		op, oprec := self.token_prec()
+		fmt.Println("parse_binary_expr 0", oprec, op.Val, prec1)
 		if oprec < prec1 { // 优先执行
 			return a
 		}
 
+		fmt.Println("parse_binary_expr 0", self.match(op.Type), op.Val, self.Current())
 		self.match(op.Type)
 		self.skipWhitespace()
 		if lhs {
@@ -845,7 +858,7 @@ func (self *TParser) parse_binary_expr(lhs bool, prec1 int) ast.Expr {
 			lhs = false
 		}
 
-		fmt.Println("parse_binary_expr", lexer.TokenNames[op.Type], op, self.Current())
+		fmt.Println("parse_binary_expr", lexer.TokenNames[op.Type], op.Val, self.Current())
 		b := self.parse_binary_expr(false, oprec+1)
 		a = &ast.TBinaryExpr{
 			Operator: op,
@@ -1065,7 +1078,7 @@ func (self *TParser) Parse(expr string) ast.Expr {
 		self.tokens = append(self.tokens, &token)
 		fmt.Println(lexer.PrintToken(token))
 	}
-	fmt.Println("complete")
+	//fmt.Println("complete")
 
 	//parser.Count = len(parser.items)
 	return self.parse_expr(false)

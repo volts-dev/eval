@@ -217,7 +217,7 @@ func (vr *TVariableResolver) resolve(ctx *context.ExecutionContext) (*ast.Value,
 	var current reflect.Value
 	var isSafe bool
 
-	fmt.Println("resolve1", ctx)
+	//fmt.Println("resolve1", ctx)
 	for idx, part := range vr.parts {
 		indent := part.(*TVariablePart)
 		if idx == 0 {
@@ -232,10 +232,13 @@ func (vr *TVariableResolver) resolve(ctx *context.ExecutionContext) (*ast.Value,
 			}
 
 			// Raw 字符串
-			if val == nil {
+			//if val == nil {
+			//	//val = indent.s
+			//}
+
+			if isKeyword(indent.s) {
 				val = indent.s
 			}
-
 			current = reflect.ValueOf(val) // Get the initial value
 		} else {
 			// Next parts, resolve it from current
@@ -468,14 +471,14 @@ func (node *TNodeIf) Execute(ctx *context.ExecutionContext) (*ast.Value, *ast.Er
 		if err != nil {
 			return nil, err
 		}
-		fmt.Println("Evaluate node3", result)
+		fmt.Println("Evaluate node3", result.IsNil(), result.IsBool(), result.IsString())
 		if result.IsTrue() {
 			return node.wrappers[i].Execute(ctx)
 		}
 
 		// Last value
 		if len(node.wrappers) > i+1 {
-			//fmt.Println("Evaluate node4", node.wrappers[i+1])
+			fmt.Println("Evaluate node4", node.wrappers[i+1])
 			return node.wrappers[i+1].Execute(ctx)
 		} else {
 			return ast.AsValue(nil), nil

@@ -250,6 +250,10 @@ func (v *Value) IsTrue() bool {
 // Example:
 //     AsValue(1).Negate().IsTrue() == false
 func (v *Value) Negate() *Value {
+	// 当Indent 为Nil时且为not Indent 返回True
+	if v == nil {
+		return AsValue(true)
+	}
 	switch v.getResolvedValue().Kind() {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64,
 		reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
@@ -496,6 +500,9 @@ func (v *Value) Interface() interface{} {
 
 // Checks whether two values are containing the same value or object.
 func (v *Value) EqualValueTo(other *Value) bool {
+	if v == nil {
+		return other == nil
+	}
 	// comparison of uint with int fails using .Interface()-comparison (see issue #64)
 	if v.IsInteger() && other.IsInteger() {
 		return v.Integer() == other.Integer()

@@ -178,10 +178,13 @@ func (self *TCompositeLit) Execute(ctx *context.ExecutionContext) (*Value, *Erro
 			}
 			k, _ := kv.Key.Execute(ctx)
 			if k == nil {
-				continue
+				continue // TODO 返回错误
 			}
 
 			v, _ := kv.Value.Execute(ctx)
+			if v == nil {
+				continue // TODO 返回错误
+			}
 			fmt.Println("TCompositeLit) Execute", k.String(), v.Interface())
 			visited[k.String()] = v.Interface()
 		}
@@ -241,7 +244,7 @@ func (expr *TIndexExpr) Execute(ctx *context.ExecutionContext) (*Value, *Error) 
 			panic("not possible")
 		}
 	}
-	return nil, nil
+	return AsValue(nil), nil
 }
 
 func (self *TSliceExpr) exprNode() {}
@@ -282,7 +285,7 @@ func (expr *TBinaryExpr) Execute(ctx *context.ExecutionContext) (*Value, *Error)
 			return nil, nil //ctx.Error("Negative sign on a non-number expression", nil) //, expr.GetPositionToken())
 		}
 	}
-	//fmt.Println("simpleExpression", t1.Interface())
+	//fmt.Println("simpleExpression", t1)
 	if expr.Term2 != nil {
 		t2, err := expr.Term2.Execute(ctx)
 		if err != nil {
@@ -290,18 +293,25 @@ func (expr *TBinaryExpr) Execute(ctx *context.ExecutionContext) (*Value, *Error)
 		}
 
 		// TODO del
-		defer fmt.Println("TBinaryExpr.Execute:", result, expr.Operator.Val, t2)
+		defer fmt.Println("TBinaryExpr.Execute:", t1, expr.Operator.Val, t2)
 
 		//fmt.Println("TBinaryExpr.Execute:", expr.Operator, expr.Operator.Val)
 		switch expr.Operator.Val {
+		case "in":
+			//fmt.Println("TBinaryExpr.Execute t2.Contains(t1):", t2.Contains(t1))
+			return AsValue(t2.Contains(t1)), nil
 		case "and", "&&":
+			if t1 == nil || t2 == nil {
+				return AsValue(false), nil
+			}
+
 			//fmt.Println("AND", t1.Interface(), t2.Interface())
-			if t1.IsBool() && !t2.IsBool() {
+			/*if t1.IsBool() && !t2.IsBool() {
 				if t1.IsTrue() {
 					return AsValue(t2.Interface()), nil
 				}
 				return AsValue(t1.IsTrue()), nil
-			}
+			}*/
 
 			return AsValue(t1.IsTrue() && t2.IsTrue()), nil
 
@@ -388,8 +398,7 @@ func (expr *TBinaryExpr) Execute(ctx *context.ExecutionContext) (*Value, *Error)
 		case "!=", "<>":
 			fmt.Println("!=", t1.EqualValueTo(t2))
 			return AsValue(!t1.EqualValueTo(t2)), nil
-		case "in":
-			return AsValue(t2.Contains(t1)), nil
+
 		default:
 			panic("unimplemented")
 		}
@@ -410,17 +419,17 @@ func (expr *TParenExpr) Execute(ctx *context.ExecutionContext) (*Value, *Error) 
 
 func (self *TUnaryExpr) exprNode() {}
 func (expr *TUnaryExpr) Execute(ctx *context.ExecutionContext) (*Value, *Error) {
-	t1, err := expr.Term1.Execute(ctx)
+	result, err := expr.Term1.Execute(ctx)
 	if err != nil {
 		return nil, err
 	}
-	result := t1
 
+	//fmt.Println("TUnaryExpr,0", expr.NegativeSign, result)
 	if expr.Negate {
 		result = result.Negate()
 	}
 
-	fmt.Println("TUnaryExpr,1", expr.NegativeSign, t1, result, result.IsNumber())
+	defer fmt.Println("TUnaryExpr.Execute:", expr.Term1, result)
 	if expr.NegativeSign {
 		if result.IsNumber() {
 			switch {
