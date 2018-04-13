@@ -3,7 +3,8 @@ package context
 import (
 	"fmt"
 	"regexp"
-	"vectors/lexer"
+
+	"github.com/VectorsOrigin/lexer"
 )
 
 var reIdentifiers = regexp.MustCompile("^[a-zA-Z0-9_]+$")

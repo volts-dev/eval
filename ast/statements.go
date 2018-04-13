@@ -1,7 +1,7 @@
 package ast
 
 import (
-	"vectors/lexer"
+	"github.com/VectorsOrigin/lexer"
 )
 
 type (

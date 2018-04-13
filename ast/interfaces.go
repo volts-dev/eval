@@ -1,7 +1,7 @@
 package ast
 
 import (
-	"vectors/eval/context"
+	"github.com/VectorsOrigin/eval/context"
 )
 
 // ----------------------------------------------------------------------------

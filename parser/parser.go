@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"vectors/eval/ast"
-	"vectors/lexer"
+
+	"github.com/VectorsOrigin/eval/ast"
+	"github.com/VectorsOrigin/lexer"
 )
 
 type (

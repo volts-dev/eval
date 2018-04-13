@@ -5,9 +5,10 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
-	"vectors/eval/ast"
-	"vectors/eval/context"
-	"vectors/lexer"
+
+	"github.com/VectorsOrigin/eval/ast"
+	"github.com/VectorsOrigin/eval/context"
+	"github.com/VectorsOrigin/lexer"
 )
 
 const (

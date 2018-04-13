@@ -2,9 +2,10 @@ package eval
 
 import (
 	"fmt"
-	"vectors/eval/ast"
-	"vectors/eval/context"
-	"vectors/eval/parser"
+
+	"github.com/VectorsOrigin/eval/ast"
+	"github.com/VectorsOrigin/eval/context"
+	"github.com/VectorsOrigin/eval/parser"
 )
 
 func Eval(expr string, ctx ...map[string]interface{}) (*ast.Value, *ast.Error) {

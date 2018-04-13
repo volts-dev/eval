@@ -1,8 +1,8 @@
 package ast
 
 import (
-	"vectors/eval/context"
-	"vectors/lexer"
+	"github.com/VectorsOrigin/eval/context"
+	"github.com/VectorsOrigin/lexer"
 )
 
 // 基本数据类型

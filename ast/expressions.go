@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"math"
 	"reflect"
-	"vectors/eval/context"
-	"vectors/lexer"
+
+	"github.com/VectorsOrigin/eval/context"
+	"github.com/VectorsOrigin/lexer"
 )
 
 type (
