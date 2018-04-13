@@ -1,7 +1,7 @@
 package context
 
 import (
-	"lexer"
+	"vectors/lexer"
 )
 
 // ExecutionContext contains all data important for the current rendering state.

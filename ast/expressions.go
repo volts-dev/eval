@@ -1,11 +1,11 @@
 package ast
 
 import (
-	"eval/context"
 	"fmt"
-	"lexer"
 	"math"
 	"reflect"
+	"vectors/eval/context"
+	"vectors/lexer"
 )
 
 type (

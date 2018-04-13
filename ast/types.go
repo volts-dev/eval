@@ -1,8 +1,8 @@
 package ast
 
 import (
-	"eval/context"
-	"lexer"
+	"vectors/eval/context"
+	"vectors/lexer"
 )
 
 // 基本数据类型

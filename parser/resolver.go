@@ -5,10 +5,9 @@ import (
 	"reflect"
 	"strconv"
 	"strings"
-	//	"fmt"
-	"eval/ast"
-	"eval/context"
-	"lexer"
+	"vectors/eval/ast"
+	"vectors/eval/context"
+	"vectors/lexer"
 )
 
 const (

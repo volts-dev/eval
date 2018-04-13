@@ -2,11 +2,10 @@ package parser
 
 import (
 	"fmt"
-	"lexer"
 	"strconv"
 	"strings"
-	//	"strings"
-	"eval/ast"
+	"vectors/eval/ast"
+	"vectors/lexer"
 )
 
 type (

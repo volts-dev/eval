@@ -1,10 +1,10 @@
 package eval
 
 import (
-	"eval/ast"
-	"eval/context"
-	"eval/parser"
 	"fmt"
+	"vectors/eval/ast"
+	"vectors/eval/context"
+	"vectors/eval/parser"
 )
 
 func Eval(expr string, ctx ...map[string]interface{}) (*ast.Value, *ast.Error) {
