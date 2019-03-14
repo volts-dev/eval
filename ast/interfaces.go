@@ -1,7 +1,7 @@
 package ast
 
 import (
-	"github.com/VectorsOrigin/eval/context"
+	"github.com/volts-dev/eval/context"
 )
 
 // ----------------------------------------------------------------------------

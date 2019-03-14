@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/VectorsOrigin/eval/ast"
-	"github.com/VectorsOrigin/lexer"
+	"github.com/volts-dev/eval/ast"
+	"github.com/volts-dev/lexer"
 )
 
 type (

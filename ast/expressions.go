@@ -5,8 +5,8 @@ import (
 	"math"
 	"reflect"
 
-	"github.com/VectorsOrigin/eval/context"
-	"github.com/VectorsOrigin/lexer"
+	"github.com/volts-dev/eval/context"
+	"github.com/volts-dev/lexer"
 )
 
 type (

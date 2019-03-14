@@ -3,9 +3,9 @@ package eval
 import (
 	"fmt"
 
-	"github.com/VectorsOrigin/eval/ast"
-	"github.com/VectorsOrigin/eval/context"
-	"github.com/VectorsOrigin/eval/parser"
+	"github.com/volts-dev/eval/ast"
+	"github.com/volts-dev/eval/context"
+	"github.com/volts-dev/eval/parser"
 )
 
 func Eval(expr string, ctx ...map[string]interface{}) (*ast.Value, *ast.Error) {

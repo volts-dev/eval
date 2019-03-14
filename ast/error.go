@@ -1,7 +1,7 @@
 package ast
 
 import (
-	"github.com/VectorsOrigin/lexer"
+	"github.com/volts-dev/lexer"
 )
 
 type Error lexer.Error

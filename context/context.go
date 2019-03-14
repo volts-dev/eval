@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/VectorsOrigin/lexer"
+	"github.com/volts-dev/lexer"
 )
 
 var reIdentifiers = regexp.MustCompile("^[a-zA-Z0-9_]+$")
